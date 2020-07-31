@@ -1,11 +1,14 @@
 //based on this code https://github.com/Scrawk/Hull-Delaunay-Voronoi
-float dstPow = 4;//maginetic distance factor, we generary use 2 for magnetic field but 4 is good for this situation
+int numVertices = 100;//200
+float size = 200;//500
+boolean usePrinciple = false;//squared distance for magnetic field in principle but power 4 is good for this situation
 float magR = 2;//magnet radius
 float partiR = 0.5;//particle radius
 float spf = 10;//spawn per frame
 boolean mode3D = false;
 float pS = 2;//point size
 float lS = 1;//line size
+int iter = 10;//simulation iteration
 
 ArrayList<Particle> particles = new ArrayList<Particle>();
 ArrayList<Magnet> magnets = new ArrayList<Magnet>();
@@ -13,7 +16,7 @@ ArrayList<Magnet> magnets = new ArrayList<Magnet>();
 ExampleVoronoi voronoi2D = new ExampleVoronoi(2);
 
 void setup(){
-  //fullScreen(P3D);
+  //fullScreen();
   blendMode(ADD);
   size(500, 500);
   colorMode(HSB, 360, 100, 100);
@@ -29,7 +32,7 @@ void setup(){
   }
   //on or off, both are good
   for(Simplex s : voronoi2D.voronoi.delaunay.simplexes){//get all voronoi vertices          //                ~100
-    magnets.add(new Magnet(new PVector(s.circumC[0]+width/2, s.circumC[1]+height/2), -1, color(200+random(50), 100, 100, 30)));
+    //magnets.add(new Magnet(new PVector(s.circumC[0]+width/2, s.circumC[1]+height/2), -1, color(200+random(50), 100, 100, 30)));
   }
 }
 
@@ -44,22 +47,24 @@ void keyPressed(){
 
 void draw(){
   noStroke();
-  for(Magnet magnet : magnets){
-    if(magnet.power>0)magnet.genParticles(magnet.power);
-  }
-  for(Particle particle : particles){
-    particle.update(magnets);
-  }
-  for(Particle particle : particles){
-    particle.show();
-  }
-  for(Magnet magnet : magnets){
-    magnet.show();
-  }
-  for(int i=particles.size()-1; i>=0; i--){
-    Particle particle = particles.get(i);
-    if(!particle.valid(magnets)){
-    particles.remove(i);
+  for(int it=0; it<iter; it++){
+    for(Magnet magnet : magnets){
+      if(magnet.power>0)magnet.genParticles(magnet.power);
+    }
+    for(Particle particle : particles){
+      particle.update(magnets);
+    }
+    for(Particle particle : particles){
+      particle.show();
+    }
+    for(Magnet magnet : magnets){
+      magnet.show();
+    }
+    for(int i=particles.size()-1; i>=0; i--){
+      Particle particle = particles.get(i);
+      if(!particle.valid(magnets)){
+      particles.remove(i);
+      }
     }
   }
 }

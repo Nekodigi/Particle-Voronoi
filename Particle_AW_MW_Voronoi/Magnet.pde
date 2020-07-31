@@ -2,11 +2,15 @@ class Magnet{
   PVector pos;
   float power;
   color col;
+  float aw;//add weight
+  float mw;//multiplicate weight
   
   Magnet(PVector pos, float power, color col){
     this.pos = pos;
     this.power = power;
     this.col = col;
+    this.aw = random(awMin, awMax);
+    this.mw = random(mwMin, mwMax);
   }
   
   void genParticles(float power){
@@ -15,6 +19,6 @@ class Magnet{
   
   void show(){
     fill(col);
-    rect(pos.x-magR, pos.y-magR, magR*2, magR*2);
+    ellipse(pos.x, pos.y, magR*2, magR*2);
   }
 }

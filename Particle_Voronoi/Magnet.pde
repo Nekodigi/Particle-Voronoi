@@ -15,6 +15,6 @@ class Magnet{
   
   void show(){
     fill(col);
-    rect(pos.x-magR, pos.y-magR, magR*2, magR*2);
+    ellipse(pos.x, pos.y, magR*2, magR*2);
   }
 }

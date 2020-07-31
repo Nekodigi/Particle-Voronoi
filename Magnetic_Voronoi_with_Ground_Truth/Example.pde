@@ -1,6 +1,4 @@
 class ExampleVoronoi{
-  int numVertices = 50;
-  float size = 200;
   Voronoi voronoi;
   ArrayList<Vertex> vertices = new ArrayList<Vertex>();
   int seed = 0;
@@ -24,8 +22,6 @@ class ExampleVoronoi{
 }
 
 class ExampleDelaunay{
-  int numVertices = 100;
-  float size = 800;
   Delaunay delaunay;
   ArrayList<Vertex> vertices = new ArrayList<Vertex>();
   int seed = 0;
@@ -49,8 +45,6 @@ class ExampleDelaunay{
 }
 
 class ExampleHull{
-  int numVertices = 100;
-  float size = 800;
   ConvexHull hull;
   ArrayList<Vertex> vertices = new ArrayList<Vertex>();
   int seed = 0;

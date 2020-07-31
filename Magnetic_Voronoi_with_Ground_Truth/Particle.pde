@@ -13,7 +13,10 @@ class Particle{
     PVector sum = new PVector();
     for(Magnet magnet : magnets){
       PVector diff = PVector.sub(pos, magnet.pos);
-      float poweredDst = pow(diff.x, dstPow) + pow(diff.y, dstPow);
+      float poweredDst = diff.x*diff.x + diff.y*diff.y;//squared distance
+      if(!usePrinciple){
+        poweredDst = diff.x*diff.x*diff.x*diff.x + diff.y*diff.y*diff.y*diff.y;
+      }
       diff.mult(power*magnet.power/poweredDst);//for easy visualize
       sum.add(diff);
     }
@@ -33,6 +36,6 @@ class Particle{
   
   void show(){
     fill(col);
-    ellipse(pos.x, pos.y, partiR*2, partiR*2);
+    rect(pos.x-partiR, pos.y, partiR*2-partiR, partiR*2);
   }
 }
